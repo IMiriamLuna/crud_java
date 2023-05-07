@@ -13,7 +13,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
-	private int iduser;
+	private Long iduser;
 	
 	@Column(name = "name")
 	private String name;
@@ -29,11 +29,11 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getIduser() {
+	public Long getIduser() {
 		return iduser;
 	}
 
-	public void setIduser(int iduser) {
+	public void setIduser(Long iduser) {
 		this.iduser = iduser;
 	}
 

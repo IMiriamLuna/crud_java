@@ -7,8 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +49,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/add")
-	public ResponseEntity<Map<String,Object>> create(@RequestBody Map<String, Object> payload){
+	public ResponseEntity<?> create(@RequestBody Map<String, Object> payload){
 		try {
 			Map<String, Object> result = userService.create(payload);
 			
@@ -62,7 +65,48 @@ public class UserController {
 			response.put("created", false);
 			response.put("data", new User());
 			response.put("message", e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<?> update(@RequestBody Map<String, Object> payload){
+		try {
+			Map<String, Object> result = userService.update(payload);
+			
+			if(result.isEmpty()) {
+				return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+			}else if(Boolean.parseBoolean(result.get("updated").toString())) {
+				return new ResponseEntity<>(result,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(result,HttpStatus.NOT_MODIFIED);
+			}
+		}catch(Exception e) {
+			Map<String,Object> response = new HashMap<>();
+			response.put("updated", false);
+			response.put("data", new User());
+			response.put("message", e.getMessage());
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@DeleteMapping("/delete/{userId}")
+	public ResponseEntity<?> delete(@PathVariable Long userId){
+		try {
+			Map<String, Object> result = userService.delete(userId);
+			
+			if(result.isEmpty()) {
+				return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+			}else if(Boolean.parseBoolean(result.get("deleted").toString())) {
+				return new ResponseEntity<>(result,HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(result,HttpStatus.NOT_MODIFIED);
+			}
+		}catch(Exception e) {
+			Map<String,Object> response = new HashMap<>();
+			response.put("deleted", false);
+			response.put("message", e.getMessage());
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
