@@ -44,7 +44,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 
+	 * Create new user
 	 * @param payload
 	 * @return
 	 */
@@ -69,6 +69,11 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * Update one user by the id
+	 * @param payload
+	 * @return
+	 */
 	@PutMapping("/update")
 	public ResponseEntity<?> update(@RequestBody Map<String, Object> payload){
 		try {
@@ -90,6 +95,11 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * Delete a user by the id
+	 * @param userId
+	 * @return
+	 */
 	@DeleteMapping("/delete/{userId}")
 	public ResponseEntity<?> delete(@PathVariable Long userId){
 		try {

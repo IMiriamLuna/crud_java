@@ -24,6 +24,12 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
+	/**
+	 * Add new data to the data base
+	 * @param payload
+	 * @return
+	 * @throws Exception
+	 */
 	public Map<String, Object> create(Map<String, Object> payload) throws Exception{
 		Map<String, Object> response = new HashMap<>();
 		
@@ -55,6 +61,12 @@ public class UserService {
 		
 	}
 	
+	/**
+	 * Update data of a register
+	 * @param payload
+	 * @return
+	 * @throws Exception
+	 */
 	public Map<String, Object> update(Map<String,Object> payload) throws Exception{
 		Map<String, Object> response = new HashMap<>();
 		
@@ -100,6 +112,12 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * Delete a register
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	public Map<String, Object> delete(Long userId) throws Exception{
 		Map<String, Object> response = new HashMap<>();
 		
